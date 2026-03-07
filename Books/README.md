@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Framework-green)
 ![Status](https://img.shields.io/badge/Project-R&D%20Lab-orange)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
 
 A lightweight **FastAPI backend module** designed for experimenting with modern API architecture, request validation, and backend design patterns.
 
@@ -117,6 +117,4 @@ This repository is designed as a **backend experimentation lab** for exploring:
 
 ---
 
----
 
-⭐ If you found this project useful, feel free to star the repository.
