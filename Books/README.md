@@ -1,4 +1,4 @@
-# 🚀 Books API – FastAPI Backend R&D Lab
+# 🚀 Books API 
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Framework-green)
@@ -116,5 +116,6 @@ This repository is designed as a **backend experimentation lab** for exploring:
 - Production-ready project structure
 
 ---
+
 
 
