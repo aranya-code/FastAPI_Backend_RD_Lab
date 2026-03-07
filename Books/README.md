@@ -79,7 +79,6 @@ FastAPI automatically generates interactive documentation.
 | Tool | URL |
 |-----|-----|
 | Swagger UI | http://127.0.0.1:8000/docs |
-| ReDoc | http://127.0.0.1:8000/redoc |
 
 ---
 
@@ -87,10 +86,10 @@ FastAPI automatically generates interactive documentation.
 
 | Method | Endpoint | Description |
 |------|---------|-------------|
-| GET | `/books` | Retrieve all books |
-| GET | `/books/{book_id}` | Retrieve book by ID |
-| GET | `/books/?category=` | Filter books by category |
-| POST | `/books` | Add a new book |
+| GET | `/` | Retrieve all books |
+| GET | `/books/id/{book_id}` | Retrieve book by ID |
+| GET | `/books/category/{category}` | Filter books by category |
+| POST | `/books/create_book` | Add a new book |
 
 ---
 
@@ -116,6 +115,7 @@ This repository is designed as a **backend experimentation lab** for exploring:
 - Production-ready project structure
 
 ---
+
 
 
 
