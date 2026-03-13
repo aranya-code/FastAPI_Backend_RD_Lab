@@ -1,7 +1,8 @@
 from database import Base
 from sqlalchemy import Column, Integer, Boolean, String
 
-class Todos(Base):
+# Model for Todos list
+class Todos_Model(Base):
     __tablename__ = 'todos'
 
     id = Column(Integer, primary_key = True, index = True)
