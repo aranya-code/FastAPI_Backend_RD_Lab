@@ -8,6 +8,10 @@ class CreateUsers(BaseModel):
     password: str
     role: str
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
 # Using pydanctic validation schema for Todos
 class Todos(BaseModel):
     title: str = Field(min_length= 3)
