@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Path
-from database import engine, SessionLocal
+from database import SessionLocal
 from models import Todos_Model
 from typing import Annotated
 from sqlalchemy.orm import Session
@@ -17,7 +17,7 @@ def get_db():
     finally:
         db.close()
 
-# Creating database dependency
+# Creating dependency
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
