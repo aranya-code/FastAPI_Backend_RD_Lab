@@ -47,3 +47,12 @@ def change_password(db: db_dependency, user: user_dependency, user_verification:
     user_model.hashed_password = bcrypt_context.hash(user_verification.new_password)
     db.add(user_model)
     db.commit()
+
+@router.put('/phonenumber/{phone_number}')
+def change_phone_number(db: db_dependency, user: user_dependency, phone_number: str):
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    user_model = db.query(Users).filter(Users.id == user.id).first()
+    user_model.phone_number = phone_number
+    db.add(user_model)
+    db.commit()

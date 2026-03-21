@@ -5,6 +5,7 @@ class CreateUsers(BaseModel):
     email: str
     username: str
     name: str
+    phone_number: str
     password: str
     role: str
 

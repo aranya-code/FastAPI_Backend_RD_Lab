@@ -13,6 +13,7 @@ class Users(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default= True)
     role = Column(String)
+    phone_number = Column(String)
     
     todos = relationship("Todos_Model", back_populates='owner')
 
@@ -24,7 +25,7 @@ class Todos_Model(Base):
     title = Column(String)
     description = Column(String)
     priority = Column(Integer)
-    status = Column(Boolean, default = False)
+    status = Column(Boolean, default = False)    
     owner_id = Column(Integer, ForeignKey('users.id'))
 
     owner = relationship("Users", back_populates= 'todos')
