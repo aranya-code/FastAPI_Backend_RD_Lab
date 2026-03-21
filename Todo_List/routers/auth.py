@@ -66,7 +66,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_bearer)], db: db_depen
                                 detail= 'Could not validate user')
         
         user = db.query(Users).filter(Users.id == user_id).first()
-        print("TOKEN RECEIVED:", token)
         return user
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,

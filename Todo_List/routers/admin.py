@@ -22,6 +22,16 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 user_depenedency = Annotated[dict, Depends(get_current_user)]
 
+# Get all users
+@router.get('/users', status_code= status.HTTP_200_OK)
+def get_users(db: db_dependency, user: user_depenedency):
+    if user is None or user.role != 'admin':
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    users= db.query(Users).all()
+    return users
+
+
+
 # Get all Todos
 @router.get('/todos', status_code= status.HTTP_200_OK)
 def get_todos(db: db_dependency, user: user_depenedency):
