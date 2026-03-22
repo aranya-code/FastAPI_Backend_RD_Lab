@@ -50,7 +50,7 @@ def create_todo(user: user_dependency, db: db_dependency, todo_request: Todos):
     return todo_request
 
 # Update a todo
-@router.put('/todos/update/{todo_id}', status_code= status.HTTP_204_NO_CONTENT)
+@router.put('/todos/update/{todo_id}', status_code= status.HTTP_200_OK)
 def update_todo(user: user_dependency, db: db_dependency, todo_id: int, todo_request: Todos):
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Not Authenticated')
