@@ -65,14 +65,17 @@ def update_todo(user: user_dependency, db: db_dependency, todo_id: int, todo_req
 
     db.add(todo_item)
     db.commit()
+    return todo_item
 
 # Delete a todo
-@router.delete('/todos/delete/{todo_id}')
+@router.delete('/todos/delete/{todo_id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_todo(user: user_dependency, db: db_dependency, todo_id: int):
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Not Authenticated')
     todo_item = db.query(Todos_Model).filter(Todos_Model.id == todo_id)\
         .filter(Todos_Model.owner_id == user.id).first()
+    if todo_item is None:
+        raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, detail= 'Item not found')
     db.delete(todo_item)
     db.commit()
     

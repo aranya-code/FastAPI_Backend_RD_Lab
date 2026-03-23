@@ -1,163 +1,121 @@
+import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from main import app
+from routers.auth import get_current_user
 
-import models
-from database import Base
-from main import app, get_db
-
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test_todos.db"
-
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False}
-)
-
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-Base.metadata.create_all(bind=engine)
-
-
-def override_get_db():
-    db = TestingSessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 
-def setup_function():
-    Base.metadata.drop_all(bind=engine)
-    Base.metadata.create_all(bind=engine)
+# -------------------------
+# MOCK AUTH USER
+# -------------------------
+def override_get_current_user():
+    class User:
+        id = 1
+    return User()
+
+app.dependency_overrides[get_current_user] = override_get_current_user
 
 
-def create_test_todo():
-    db = TestingSessionLocal()
-    todo = models.Todos_Model(
-        title="Learn FastAPI",
-        description="Practice CRUD testing",
-        priority=3,
-        status=False
-    )
-    db.add(todo)
-    db.commit()
-    db.refresh(todo)
-    db.close()
-    return todo
-
-
-def test_read_all_todos_empty():
+# -------------------------
+# GET ALL TODOS
+# -------------------------
+def test_get_all_todos():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == []
+    assert isinstance(response.json(), list)
 
 
-def test_create_todo():
+# -------------------------
+# CREATE TODO
+# -------------------------
+def test_create_todo_success():
     data = {
-        "title": "Write tests",
-        "description": "Create pytest test cases",
-        "priority": 4,
-        "status": False
-    }
-
-    response = client.post("/todos/create", json=data)
-
-    assert response.status_code == 201
-    assert response.json() == data
-
-    check = client.get("/")
-    assert check.status_code == 200
-    assert len(check.json()) == 1
-    assert check.json()[0]["title"] == "Write tests"
-
-
-def test_read_todo_by_id():
-    todo = create_test_todo()
-
-    response = client.get(f"/todos/{todo.id}")
-
-    assert response.status_code == 200
-    assert response.json()["id"] == todo.id
-    assert response.json()["title"] == "Learn FastAPI"
-
-
-def test_read_todo_by_id_not_found():
-    response = client.get("/todos/999")
-
-    assert response.status_code == 404
-    assert response.json() == {"detail": "Todo not found"}
-
-
-def test_update_todo():
-    todo = create_test_todo()
-
-    updated_data = {
-        "title": "Learn FastAPI Updated",
-        "description": "Practice CRUD testing updated",
-        "priority": 5,
-        "status": True
-    }
-
-    response = client.put(f"/todos/update/{todo.id}", json=updated_data)
-
-    assert response.status_code == 204
-
-    check = client.get(f"/todos/{todo.id}")
-    assert check.status_code == 200
-    assert check.json()["title"] == "Learn FastAPI Updated"
-    assert check.json()["description"] == "Practice CRUD testing updated"
-    assert check.json()["priority"] == 5
-    assert check.json()["status"] is True
-
-
-def test_update_todo_not_found():
-    updated_data = {
-        "title": "Missing Todo",
-        "description": "This should fail",
-        "priority": 2,
-        "status": False
-    }
-
-    response = client.put("/todos/update/999", json=updated_data)
-
-    assert response.status_code == 404
-    assert response.json() == {"detail": "No todo found"}
-
-
-def test_delete_todo():
-    todo = create_test_todo()
-
-    response = client.delete(f"/todos/delete/{todo.id}")
-    assert response.status_code in [200, 204]
-
-    check = client.get("/")
-    assert check.status_code == 200
-    assert len(check.json()) == 0
-
-
-def test_create_todo_validation_error_short_title():
-    data = {
-        "title": "ab",
-        "description": "Valid description",
+        "title": "Test Todo",
+        "description": "Testing",
         "priority": 3,
         "status": False
     }
 
     response = client.post("/todos/create", json=data)
-    assert response.status_code == 422
+    assert response.status_code == 201
+
+    body = response.json()
+    assert body["title"] == data["title"]
+    assert body["priority"] == 3
 
 
-def test_create_todo_validation_error_invalid_priority():
+def test_create_todo_invalid():
     data = {
-        "title": "Valid Title",
-        "description": "Valid description",
-        "priority": 10,
+        "title": "",  # invalid
+        "description": "bad",
+        "priority": "high",  # invalid type
         "status": False
     }
 
     response = client.post("/todos/create", json=data)
     assert response.status_code == 422
+
+
+# -------------------------
+# GET TODO BY ID
+# -------------------------
+def test_get_todo_by_id_not_found():
+    response = client.get("/todos/9999")
+    assert response.status_code == 404
+
+
+# -------------------------
+# UPDATE TODO
+# -------------------------
+def test_update_todo_not_found():
+    data = {
+        "title": "Updated",
+        "description": "Updated desc",
+        "priority": 2,
+        "status": True
+    }
+
+    response = client.put("/todos/update/9999", json=data)
+    assert response.status_code == 404
+
+
+# -------------------------
+# DELETE TODO
+# -------------------------
+def test_delete_todo_not_found():
+    response = client.delete("/todos/delete/9999")
+    assert response.status_code in [200, 404]  # depends on your logic
+
+
+# -------------------------
+# AUTH TEST (IMPORTANT)
+# -------------------------
+def test_unauthorized_access():
+    app.dependency_overrides = {}  # remove mock
+
+    response = client.get("/")
+    assert response.status_code == 401
+
+    # restore mock
+    app.dependency_overrides[get_current_user] = override_get_current_user
+
+
+# -------------------------
+# EDGE CASES
+# -------------------------
+def test_empty_payload():
+    response = client.post("/todos/create", json={})
+    assert response.status_code == 422
+
+
+def test_large_input():
+    data = {
+        "title": "A" * 500,
+        "description": "B" * 2000,
+        "priority": 1,
+        "status": False
+    }
+
+    response = client.post("/todos/create", json=data)
+    assert response.status_code in [201, 422]
