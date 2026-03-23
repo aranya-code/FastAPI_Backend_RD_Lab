@@ -13,8 +13,10 @@ db.sqlite3
 __pycache__/
 *.py[cod]
 *.pyc
-
+*__pycache__
+*.pytest*
 
 # Virtual environments
 venv/
 .venv/
+todoenv/
