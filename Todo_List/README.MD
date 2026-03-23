@@ -1,126 +1,137 @@
-# 📝 FastAPI Todo List API
+# 🚀 FastAPI Todo List Backend
 
-A **RESTful Todo List API** built using **FastAPI, SQLAlchemy, and SQLite**.
-This project demonstrates backend concepts like **CRUD operations, database integration, API validation, and automated testing**.
-
-It is designed as a **learning project for building modern Python backend APIs using FastAPI**.
+A secure and scalable Todo List REST API built using FastAPI, featuring authentication, database integration, and full CRUD operations.
 
 ---
 
-# 🚀 Features
+## 📌 Overview
 
-* Create Todo items
-* Retrieve all Todos
-* Retrieve a Todo by ID
-* Update Todo items
-* Delete Todo items
-* Data validation using **Pydantic**
-* Database integration using **SQLAlchemy ORM**
-* API testing using **Pytest**
-* Interactive API documentation using **Swagger UI**
+This project is a backend API for managing todos with user authentication. It demonstrates:
+
+- Secure user-based access (JWT authentication)
+- CRUD operations for todos
+- Testable API design
+- Automatic API documentation
 
 ---
 
-# 🛠 Tech Stack
+## ⚙️ Features
 
-| Technology | Purpose                               |
-| ---------- | ------------------------------------- |
-| FastAPI    | High performance Python API framework |
-| Python     | Backend programming language          |
-| SQLAlchemy | ORM for database interaction          |
-| SQLite     | Lightweight database                  |
-| Pydantic   | Data validation and serialization     |
-| Pytest     | API testing framework                 |
-| Uvicorn    | ASGI server for running FastAPI       |
+- User Authentication (JWT-based)
+- Create, Read, Update, Delete Todos
+- Database integration with SQLAlchemy
+- Dependency Injection (FastAPI style)
+- Request & Response validation using Pydantic
+- Interactive API Docs (/docs, /redoc)
+- Modular project structure
 
 ---
 
-# 📂 Project Structure
+## 🏗️ Project Structure
 
 ```
-Todo_List
+Todo_List/
 │
-├── main.py          # FastAPI application & API routes
-├── models.py        # SQLAlchemy database models
-├── schema.py        # Pydantic schemas
-├── database.py      # Database configuration
-├── test_main.py     # API test cases
-└── requirements.txt # Project dependencies
+├── main.py # Entry point
+├── database.py # DB connection
+├── models.py # SQLAlchemy models
+├── schema.py # Pydantic schemas
+├── routers/
+│ ├── todos.py # Todo endpoints
+│ └── auth.py # Authentication
+├── tests/ # Test cases
+└── requirements.txt
+
 ```
+
 
 ---
 
+## 📄 API Documentation
 
-# 📚 API Documentation
+Once running:
 
-FastAPI automatically generates interactive API docs.
-
-Swagger UI
-
-```
-http://127.0.0.1:8000/docs
-```
+- Swagger UI → http://127.0.0.1:8000/docs  
+- ReDoc → http://127.0.0.1:8000/redoc  
 
 ---
 
-# 📌 API Endpoints
+## 📌 API Endpoints
 
-| Method | Endpoint             | Description              |
-| ------ | -------------------- | ------------------------ |
-| GET    | `/`                  | Retrieve all todos       |
-| GET    | `/todos/{id}`        | Retrieve a specific todo |
-| POST   | `/todos/create`      | Create a new todo        |
-| PUT    | `/todos/update/{id}` | Update a todo            |
-| DELETE | `/todos/delete/{id}` | Delete a todo            |
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|---------|------------|
+| POST   | /auth/  | Login & get token |
 
 ---
 
-# 📦 Example Request
+### Todos
 
-```
-POST /todos/create
-```
-
-Request body
-
-```json
-{
-  "title": "Learn FastAPI",
-  "description": "Practice building APIs",
-  "priority": 3,
-  "status": false
-}
-```
+| Method | Endpoint | Description |
+|--------|---------|------------|
+| GET    | /       | Get all todos (user-specific) |
+| GET    | /todos/{id} | Get todo by ID |
+| POST   | /todos/create | Create new todo |
+| PUT    | /todos/update/{id} | Update todo |
+| DELETE | /todos/delete/{id} | Delete todo |
 
 ---
 
-# 🧪 Running Tests
+## 🧪 Running Tests
 
-Run API tests using **pytest**
-
-```
 pytest -v
-```
-
-This will run all tests defined in `test_main.py`.
 
 ---
 
-# 🎯 Learning Objectives
+## 🔒 Authentication
 
-This project demonstrates:
-
-* REST API development using FastAPI
-* Database integration using SQLAlchemy
-* Data validation with Pydantic
-* Writing automated API tests using Pytest
-* Structuring a backend API project
+This API uses JWT-based authentication.
 
 ---
 
-# 👨‍💻 Author
 
-**Aranya Majumdar**
+---
 
-GitHub
-https://github.com/aranya-code
+## 🧠 Tech Stack
+
+- Python
+- FastAPI
+- SQLAlchemy
+- Pydantic
+- Uvicorn
+- Pytest
+
+---
+
+## 📈 Future Improvements
+
+- Convert to RESTful routes (/todos/{id} style)
+- Add test database (SQLite for testing)
+- Docker support
+- Deploy to cloud (Render / AWS / Railway)
+- Add pagination & filtering
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repo  
+2. Create a new branch  
+3. Commit your changes  
+4. Push and create a PR  
+
+---
+
+## 📜 License
+
+This project is open-source and available under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+Aranya Majumdar
+
