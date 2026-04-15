@@ -3,6 +3,7 @@ from database import engine, SessionLocal
 import models
 from routers import auth, todos, admin, users
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
@@ -17,7 +18,12 @@ app.include_router(todos.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/app", response_class=FileResponse)
+def serve_frontend():
+    return FileResponse("index.html")
