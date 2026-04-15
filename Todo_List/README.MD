@@ -27,6 +27,14 @@ This project is a backend API for managing todos with user authentication. It de
 
 ---
 
+## 🚀 Quick Access
+You can access the deployed version of this application here: 
+👉 **[Live Demo on Render](https://fastapi-backend-rd-lab.onrender.com/app)**
+
+*Note: The demo site might take a moment to load if it hasn't been accessed recently.*
+
+---
+
 ## 🏗️ Project Structure
 
 ```
