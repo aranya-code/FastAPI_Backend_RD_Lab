@@ -5,11 +5,8 @@ A collection of backend projects built using FastAPI, demonstrating the progress
 ---
 
 ## Infrastructure & Automation
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)
-![Books CI](https://github.com/aranya-code/FastAPI_Backend_RD_Lab/actions/workflows/books-ci.yml/badge.svg?branch=main)
 
-![CI](https://github.com/aranya-code/FastAPI_Backend_RD_Lab/actions/workflows/books-ci.yml/badge.svg?branch=main)
+See workflow: `.github/workflows/`
 
 * **Containerization:** Fully containerized using `Docker` and `docker-compose` for consistent multi-environment deployments.
 * **CI/CD Pipeline:** Automated GitHub Actions workflows configured with path-filtering to independently run Pytest and Flake8 linting for isolated micro-projects.
@@ -18,6 +15,16 @@ A collection of backend projects built using FastAPI, demonstrating the progress
 Spin up the entire environment (API and Database) in one command:
 `docker-compose up --build`
 
+### 🔄 CI/CD Flow
+
+1. Developer pushes code to GitHub
+2. GitHub Actions pipeline triggers
+3. Dependencies installed
+4. Tests executed (pytest)
+5. Linting performed (flake8)
+6. Docker image built
+
+---
 ## 📌 Overview
 
 This repository contains **two FastAPI projects** showcasing different levels of backend development:
