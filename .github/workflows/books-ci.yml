@@ -3,18 +3,18 @@ name: Books CI
 on:
   push:
     branches: [ "main" ]
-    paths:
+    #paths:
       # ONLY trigger when files in the Books folder change
-      - 'Books/**' 
+     # - 'Books/**' 
       # Also trigger if you update this specific workflow file
-      - '.github/workflows/books-ci.yml'
+      #- '.github/workflows/books-ci.yml'
   pull_request:
     branches: [ "main" ]
-    paths:
+   # paths:
       # ONLY trigger when files in the Books folder change
-      - 'Books/**' 
+    #  - 'Books/**' 
       # Also trigger if you update this specific workflow file
-      - '.github/workflows/books-ci.yml'
+     # - '.github/workflows/books-ci.yml'
 
 jobs:
   build:
