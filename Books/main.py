@@ -142,3 +142,5 @@ def delete_book(title: str):
 
     # Return confirmation message
     return {"message": "Book deleted successfully"}
+
+# Force badge setup
