@@ -1,7 +1,27 @@
-# Core API framework and server
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.12.1
+certifi==2026.2.25
+charset-normalizer==3.4.7
+click==8.3.1
+colorama==0.4.6
+docker==7.1.0
 fastapi==0.129.0
-uvicorn==0.41.0
-
-# Keep these ONLY if your code actually makes outbound API calls to other services
-requests==2.33.1
+h11==0.16.0
+httpcore==1.0.9
 httpx==0.28.1
+idna==3.11
+iniconfig==2.3.0
+packaging==26.0
+pluggy==1.6.0
+pydantic==2.12.5
+pydantic_core==2.41.5
+Pygments==2.19.2
+pytest==9.0.2
+pywin32==311
+requests==2.33.1
+starlette==0.52.1
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+urllib3==2.6.3
+uvicorn==0.41.0
